@@ -17,10 +17,10 @@ For use in the browser, use [browserify](https://github.com/substack/node-browse
 ## Usage
 
 ``` javascript
-var merge = require( 'utils-merge2' );
+var createMergeFcn = require( 'utils-merge2' );
 ```
 
-#### merge( [level] )
+#### createMergeFcn( [options] )
 
 
 ``` javascript
@@ -35,7 +35,7 @@ var merge = require( 'utils-merge2' );
 ## Examples
 
 ``` javascript
-var merge = require( 'utils-merge2' );
+var createMergeFcn = require( 'utils-merge2' );
 
 ```
 

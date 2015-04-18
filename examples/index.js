@@ -1,4 +1,4 @@
 'use strict';
 
-var merge = require( './../lib' );
+var createMergeFcn = require( './../lib' );
 

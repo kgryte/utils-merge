@@ -7,7 +7,7 @@ var // Expectation library:
 	chai = require( 'chai' ),
 
 	// Module to be tested:
-	merge = require( './../lib' );
+	createMergeFcn = require( './../lib' );
 
 
 // VARIABLES //
@@ -21,20 +21,18 @@ var expect = chai.expect,
 describe( 'utils-merge', function tests() {
 
 	it( 'should export a function', function test() {
-		expect( merge ).to.be.a( 'function' );
+		expect( createMergeFcn ).to.be.a( 'function' );
 	});
 
-	it( 'should throw an error if provided a nonnegative integer level', function test() {
+	it( 'should throw an error if provided a non-object options argument', function test() {
 		var values = [
 			'5',
-			Math.PI,
-			-1,
+			5,
 			null,
 			NaN,
 			undefined,
 			true,
 			[],
-			{},
 			function(){}
 		];
 
@@ -43,7 +41,7 @@ describe( 'utils-merge', function tests() {
 		}
 		function badValue( value ) {
 			return function() {
-				merge( value );
+				createMergeFcn( value );
 			};
 		}
 	});

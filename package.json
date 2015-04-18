@@ -41,7 +41,8 @@
   },
   "dependencies": {
     "type-name": "^1.0.1",
-    "validate.io-nonnegative-integer": "^1.0.0"
+    "validate.io-nonnegative-integer": "^1.0.0",
+    "validate.io-object": "^1.0.3"
   },
   "devDependencies": {
     "chai": "2.x.x",
