@@ -30,49 +30,6 @@ var merge = require( 'utils-merge2' );
 
 ## Notes
 
-*	List of __supported__ values/types:
-	-	`undefined`
-	-	`null`
-	-	`boolean`/`Boolean`
-	-	`string`/`String`
-	-	`number`/`Number`
-	-	`function`
-	-	`Object`
-	-	`Date`
-	-	`RegExp`
-	-	`Array`
-	-	`Int8Array`
-	-	`Uint8Array`
-	-	`Uint8ClampedArray`
-	-	`Init16Array`
-	-	`Uint16Array`
-	-	`Int32Array`
-	-	`Uint32Array`
-	-	`Float32Array`
-	-	`Float64Array`
-	-	`Buffer` ([Node.js]((http://nodejs.org/api/buffer.html)))
-
-*	List of __unsupported__ values/types:
-	-	`DOMElement`: to copy DOM elements, use `.cloneNode()`.
-	-	`Set`
-	-	`Map`
-	-	`Error`
-	- 	`URIError`
-	-	`ReferenceError`
-	-	`SyntaxError`
-	-	`RangeError`
-
-*	If you need support for any of the above types, feel free to file an issue or submit a pull request.
-*	The implementation can handle circular references.
-*	If a `Number`, `String`, or `Boolean` object is encountered, the value is merged as a primitive. This behavior is intentional. The implementation is opinionated in wanting to __avoid__ creating `numbers`, `strings`, and `booleans` via the `new` operator and a constructor.
-*	`functions` are __not__ cloned; their reference is copied.
-*	Re: __why__ this implementation and not the many other merge modules out there.
-	1. 	They are buggy. For example, circular references are not properly tracked.
-	2. 	They fail to account for `Number`, `String`, and `Boolean` objects.
-	3. 	They fail to properly validate if a value is a Node `Buffer` object. They assume, for instance, a Node environment.
-	4. 	They do not allow limiting the merge depth.
-	5. 	They assume an `array` or `object` input value.
-	6. 	They are not sufficiently tested.
 
 
 ## Examples
