@@ -1,7 +1,7 @@
 {
   "name": "utils-merge2",
   "version": "0.0.0",
-  "description": "",
+  "description": "Merge and extend objects.",
   "author": {
     "name": "Athan Reines",
     "email": "kgryte@gmail.com"
@@ -31,6 +31,8 @@
     "deepmerge",
     "shallow",
     "shallowmerge",
+    "extend",
+    "deepextend",
     "array",
     "object",
     "date",
