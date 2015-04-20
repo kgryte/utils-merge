@@ -103,28 +103,95 @@ source = {
 // [0] Default merge behavior...
 merge = createMergeFcn();
 target = merge( {}, obj, source );
-console.log( target );
+/* returns
+	{
+		'a': 'beep',
+		'b': 3.141592653589793,
+		'c': {
+			'c1': 'bap',
+			'c2': false,
+			'c3': {
+				'c3a': [ 1, 2 ],
+				'c3b': 5,
+				'c3c': 'bop'
+			},
+			'c4': 1337,
+			'c5': <Date>
+		},
+		'd': [ 4, 5, 6 ],
+		'e': true
+	}
+*/
 
 // [1] Restrict the merge depth...
 merge = createMergeFcn({
 	'level': 2
 });
 target = merge( createCopy( obj ), createCopy( source ) );
-console.log( target );
+/* returns
+	{
+		'a': 'beep',
+		'b': 3.141592653589793,
+		'c': {
+			'c1': 'bap',
+			'c2': false,
+			'c3': {
+				'c3b': 5,
+				'c3c': 'bop'
+			},
+			'c4': 1337,
+			'c5': <Date>
+		},
+		'd': [ 4, 5, 6 ],
+		'e': true
+	}
+*/
 
 // [2] Only merge matching properties...
 merge = createMergeFcn({
 	'extend': false
 });
 target = merge( createCopy( obj ), source );
-console.log( target );
+/* returns
+	{
+		'a': 'beep',
+		'b': 3.141592653589793,
+		'c': {
+			'c1': 'bap',
+			'c2': false,
+			'c3': {
+				'c3a': [ 1, 2 ],
+				'c3b': 5
+			}
+		},
+		'd': [ 4, 5, 6 ]
+	}
+*/
 
 // [3] Don't override existing properties...
 merge = createMergeFcn({
 	'override': false
 });
 target = merge( {}, obj, source );
-console.log( target );
+/* returns
+	{
+		'a': 'beep',
+		'b': 'boop',
+		'c': {
+			'c1': 'woot',
+			'c2': false,
+			'c3': {
+				'c3a': [ 1, 2 ],
+				'c3b': null,
+				'c3c': 'bop'
+			},
+			'c4': 1337,
+			'c5': <Date>
+		},
+		'd': [ 1, 2, 3 ],
+		'e': true
+	}
+*/
 
 // [4] Return the same object...
 merge = createMergeFcn({
@@ -132,18 +199,23 @@ merge = createMergeFcn({
 	'extend': false
 });
 target = merge( createCopy( obj ), source );
-console.log( target );
+/* returns
+	{
+		'a': 'beep',
+		'b': 'boop',
+		'c': {
+			'c1': 'woot',
+			'c2': false,
+			'c3': {
+				'c3a': [ 1, 2 ],
+				'c3b': null
+			}
+		},
+		'd': [ 1, 2, 3 ]
+	}
+*/
 
 // [5] Custom merge strategy...
-/**
-* FUNCTION: strategy( a, b, key )
-*	Defines a custom merge strategy.
-*
-* @param {*} a - target value
-* @param {*} b - source value
-* @param {String} key - key on which to perform a merge
-* @returns {*} merge value
-*/
 function strategy( a, b, key ) {
 	if ( typeof a === 'string' && typeof b === 'string' ) {
 		return a + b;
@@ -156,13 +228,31 @@ function strategy( a, b, key ) {
 	}
 	// No override:
 	return a;
-} // end FUNCTION strategy()
+}
 
 merge = createMergeFcn({
 	'override': strategy
 });
 target = merge( {}, obj, source );
-console.log( target );
+/* returns
+	{
+		'a': 'beep',
+		'b': 'boop',
+		'c': {
+			'c1': 'wootbap',
+			'c2': false,
+			'c3': {
+				'c3a': [ 1, 2 ],
+				'c3b': 25000,
+				'c3c': 'bop'
+			},
+			'c4': 1337,
+			'c5': <Date>
+		},
+		'd': [ 1, 2, 3, 4, 5, 6 ],
+		'e': true
+	}
+*/
 
 // [6] Built-in Objects and Class instances...
 function Foo( bar ) {
@@ -194,7 +284,18 @@ source = {
 };
 
 target = merge( obj, source );
-console.log( target );
+/* returns
+	{
+		'time': <Date>,
+		'regex': /boop/,
+		'buffer': <Buffer 62 6f 6f 70>,
+		'Boolean': false,
+		'String': 'bop',
+		'Number': 10,
+		'Uint8Array': <Uint8Array>,
+		'Foo': <Foo>
+	}
+*/
 ```
 
 To run the example code from the top-level application directory,
