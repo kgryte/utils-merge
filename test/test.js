@@ -625,7 +625,11 @@ describe( 'utils-merge', function tests() {
 			target,
 			src,
 			actual,
-			expected;
+			expected,
+			keys,
+			key,
+			len,
+			i;
 
 		function Foo( bar ) {
 			this._bar = bar;
@@ -660,6 +664,23 @@ describe( 'utils-merge', function tests() {
 		expected = createCopy( src );
 
 		assert.deepEqual( actual, expected );
+
+		// No copy...
+		merge = createMergeFcn({
+			'copy': false
+		});
+
+		actual = merge( target, src );
+		expected = src;
+
+		assert.deepEqual( actual, expected );
+
+		keys = Object.keys( src );
+		len = keys.length;
+		for ( i = 0; i < len; i++ ) {
+			key = keys[ i ];
+			assert.strictEqual( actual[ key ], src[ key ], key );
+		}
 	});
 
 });
