@@ -252,8 +252,8 @@ out = merge( target, source1, source2 );
 	-	`RangeError`
 
 	If you need support for any of the above types, feel free to file an issue or submit a pull request.
-	
-*	`Number`, `String`, or `Boolean` objects are converted to [primitives](https://github.com/kgryte/utils/copy#notes).
+
+*	`Number`, `String`, or `Boolean` objects are merged as [primitives](https://github.com/kgryte/utils/copy#notes).
 *	`functions` are __not__ [deep copied](https://github.com/kgryte/utils-copy#notes).
 *	Support for deep merging class instances is inherently [__fragile__](https://github.com/kgryte/utils-copy#notes).
 *	Re: __why__ this implementation and not the many other [merge](https://github.com/jaredhanson/utils-merge)/[xtend](https://github.com/Raynos/xtend)/[node-extend](https://github.com/justmoon/node-extend)/[deep-merge](https://github.com/Raynos/deep-merge)/[deep-extend](https://github.com/unclechu/node-deep-extend/blob/master/index.js) modules out there.
