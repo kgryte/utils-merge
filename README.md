@@ -126,26 +126,111 @@ out = merge( target, source1, source2 );
 */
 ```
 
-__Note__: the target `object` is __mutated__.
 
-``` javascript
-var target, source, out;
-
-target = {
-	'a': 'beep'
-};
-source = {
-	'b': 'boop'
-};
-
-out = merge( target, source );
-
-console.log( out === target );
-// returns true
-```
 
 
 ## Notes
+
+*	The target `object` is __mutated__.
+
+	``` javascript
+	var target, source, out;
+
+	target = {
+		'a': 'beep'
+	};
+	source = {
+		'b': 'boop'
+	};
+
+	out = merge( target, source );
+
+	console.log( out === target );
+	// returns true
+	```
+
+*	The default merge is a deep (recursive) merge. Hence,
+
+	``` javascript
+	var target, source, out;
+
+	target = {
+		'a': {
+			'b': {
+				'c': 5
+			}
+		}
+	};
+	source = {
+		'a': {
+			'b': {
+				'c': 10
+			}
+		}
+	};
+
+	out = merge( target, source );
+	/* returns
+		{
+			'a': {
+				'b': {
+					'c': 10
+				}
+			}
+		}
+	*/
+	```
+
+*	By default, merged values are [deep copied](https://github.com/kgryte/utils-copy). Hence,
+
+	``` javascript
+	var target, source, out;
+
+	target = {
+		'a': null
+	};
+	source = {
+		'a': {
+			'b': [ 1, 2, 3 ]
+		}
+	};
+
+	out = merge( target, source );
+	console.log( out.a.b === source.a.b );
+	// returns false
+	```
+
+*	__Only__ plain JavaScript `objects` are merged and extended. The following values/types are either copied or assigned:
+	-	`Boolean`
+	-	`String`
+	-	`Number`
+	-	`Date`
+	-	`RegExp`
+	-	`Array`
+	-	`Int8Array`
+	-	`Uint8Array`
+	-	`Uint8ClampedArray`
+	-	`Init16Array`
+	-	`Uint16Array`
+	-	`Int32Array`
+	-	`Uint32Array`
+	-	`Float32Array`
+	-	`Float64Array`
+	-	`Buffer` ([Node.js]((http://nodejs.org/api/buffer.html)))
+
+*	Deep copy does __not__ work for the following values/types (see [utils-copy](https://github.com/kgryte/utils-copy)):
+	-	`Set`
+	-	`Map`
+	-	`Error`
+	- 	`URIError`
+	-	`ReferenceError`
+	-	`SyntaxError`
+	-	`RangeError`
+
+*	If you need support for any of the above types, feel free to file an issue or submit a pull request.
+*	`Number`, `String`, or `Boolean` objects are converted to primitives (see [utils-copy](https://github.com/kgryte/utils/copy)).
+*	`functions` are __not__ deep copied (see [utils-copy](https://github.com/kgryte/utils-copy)).
+*	Support for deep merging class instances is inherently __fragile__ (see [utils-copy](https://github.com/kgryte/utils-copy)).
 
 
 
