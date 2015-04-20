@@ -219,8 +219,8 @@ out = merge( target, source1, source2 );
 		}
 	};
 
-	out = merge( target, source );
-	console.log( out.a.b === source.a.b );
+	merge( target, source );
+	console.log( target.a.b === source.a.b );
 	// returns false
 	```
 
