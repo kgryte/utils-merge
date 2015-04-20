@@ -33,6 +33,7 @@
     "shallowmerge",
     "extend",
     "deepextend",
+    "xtend",
     "array",
     "object",
     "date",
