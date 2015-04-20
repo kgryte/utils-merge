@@ -136,7 +136,7 @@ console.log( '\n' );
 console.log( 'Result:' );
 console.log( target );
 
-// [4] Custom merge strategy...
+// [5] Custom merge strategy...
 console.log( '\n=======' );
 console.log( 'Custom Merge Strategy...\n' );
 
@@ -174,6 +174,51 @@ console.log( 'Source:' );
 console.log( source );
 
 target = merge( {}, obj, source );
+
+console.log( '\n' );
+console.log( 'Result:' );
+console.log( target );
+
+// [6] Built-in Objects and Class instances...
+
+console.log( '\n=======' );
+console.log( 'Built-in Objects...\n' );
+
+function Foo( bar ) {
+	this._bar = bar;
+	return this;
+}
+
+merge = createMergeFcn();
+
+obj = {
+	'time': new Date(),
+	'regex': /beep/,
+	'buffer': new Buffer( 'beep' ),
+	'Boolean': new Boolean( true ),
+	'String': new String( 'woot' ),
+	'Number': new Number( 5 ),
+	'Uint8Array': new Uint8Array( 10 ),
+	'Foo': new Foo( 'beep' )
+};
+source = {
+	'time': new Date( obj.time - 60000 ),
+	'regex': /boop/,
+	'buffer': new Buffer( 'boop' ),
+	'Boolean': new Boolean( false ),
+	'String': new String( 'bop' ),
+	'Number': new Number( 10 ),
+	'Uint8Array': new Uint8Array( 5 ),
+	'Foo': new Foo( 'boop' )
+};
+
+console.log( 'Obj:' );
+console.log( obj );
+console.log( '\n' );
+console.log( 'Source:' );
+console.log( source );
+
+target = merge( obj, source );
 
 console.log( '\n' );
 console.log( 'Result:' );

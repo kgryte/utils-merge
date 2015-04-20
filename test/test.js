@@ -229,8 +229,25 @@ describe( 'utils-merge', function tests() {
 		expected = createCopy( src );
 
 		assert.ok( actual !== src );
-		assert.ok( actual === target );
 		assert.deepEqual( actual, expected );
+	});
+
+	it( 'should return the target object', function test() {
+		var merge,
+			target,
+			src,
+			actual;
+
+		target = {};
+		src = {
+			'a': 'beep',
+			'b': 'boop'
+		};
+
+		merge = createMergeFcn();
+
+		actual = merge( target, src );
+		assert.ok( actual === target );
 	});
 
 	it( 'should merge multiple objects', function test() {
@@ -601,6 +618,48 @@ describe( 'utils-merge', function tests() {
 
 		assert.deepEqual( actual, expected );
 		assert.ok( actual === target );
+	});
+
+	it( 'should handle built-in objects and class instances', function test() {
+		var merge,
+			target,
+			src,
+			actual,
+			expected;
+
+		function Foo( bar ) {
+			this._bar = bar;
+			return this;
+		}
+
+		target = {
+			'time': new Date(),
+			'regex': /beep/,
+			'buffer': new Buffer( 'beep' ),
+			'Boolean': new Boolean( true ),
+			'String': new String( 'woot' ),
+			'Number': new Number( 5 ),
+			'Uint8Array': new Uint8Array( 10 ),
+			'Foo': new Foo( 'beep' )
+		};
+
+		src = {
+			'time': new Date( target.time - 60000 ),
+			'regex': /boop/,
+			'buffer': new Buffer( 'boop' ),
+			'Boolean': new Boolean( false ),
+			'String': new String( 'bop' ),
+			'Number': new Number( 10 ),
+			'Uint8Array': new Uint8Array( 5 ),
+			'Foo': new Foo( 'boop' )
+		};
+
+		merge = createMergeFcn();
+
+		actual = merge( target, src );
+		expected = createCopy( src );
+
+		assert.deepEqual( actual, expected );
 	});
 
 });
