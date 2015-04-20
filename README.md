@@ -255,12 +255,12 @@ out = merge( target, source1, source2 );
 *	`Number`, `String`, or `Boolean` objects are converted to [primitives](https://github.com/kgryte/utils/copy#notes).
 *	`functions` are __not__ [deep copied](https://github.com/kgryte/utils-copy#notes).
 *	Support for deep merging class instances is inherently [__fragile__](https://github.com/kgryte/utils-copy#notes).
-*	Re: __why__ this implementation and not the man other [merge](https://github.com/jaredhanson/utils-merge)/[xtend](https://github.com/Raynos/xtend)/[node-extend](https://github.com/justmoon/node-extend)/[deep-merge](https://github.com/Raynos/deep-merge)/[deep-extend](https://github.com/unclechu/node-deep-extend/blob/master/index.js) modules out there.
+*	Re: __why__ this implementation and not the many other [merge](https://github.com/jaredhanson/utils-merge)/[xtend](https://github.com/Raynos/xtend)/[node-extend](https://github.com/justmoon/node-extend)/[deep-merge](https://github.com/Raynos/deep-merge)/[deep-extend](https://github.com/unclechu/node-deep-extend/blob/master/index.js) modules out there.
 	1. 	They always __extend__ and __merge__ and do not allow one or the other.
 	2. 	They do not deep merge.
 	3. 	They do not allow limiting the merge depth.
-	4. 	If they deep copy (which most do not), they fail to account for `Number`, `String`, `Boolean`, `Buffer`, and typed `array` objects.
-	5. 	They do not allow for custom merging strategies.
+	4. 	If they deep copy (which most do not), they fail to account for `Number`, `String`, `Boolean`, `Buffer`, and typed `array` objects, as well as class instances.
+	5. 	They do not allow custom merging strategies.
 
 
 
