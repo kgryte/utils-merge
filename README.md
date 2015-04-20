@@ -32,18 +32,48 @@ var merge = createMergeFcn();
 The method accepts the following `options`:
 
 *	__level__: limits the merge depth. The default merge strategy is a deep (recursive) merge; i.e., `level = Number.POSITIVE_INFINITY`.
+
+	``` javascript
+	var merge = createMergeFcn({
+		'level': 2
+	});
+	```
+
 *	__copy__: `boolean` indicating whether to [deep copy](https://github.com/kgryte/utils-copy) merged values. Deep copying prevents shared references and source `object` mutation. Default: `true`.
+
+	``` javascript
+	var merge = createMergeFcn({
+		'copy': false
+	});
+	```
+
 *	__override__: defines the merge strategy. If `true`, source `object` values will __always__ override target `object` values. If `false`, source values __never__ override target values (useful for adding, but not overwriting properties). To define a custom merge strategy, provide a `function`.
 
 	``` javascript
+	// Turn off override...
+	var merge = createMergeFcn({
+		'override': false
+	});
+
+	// Define a custom strategy...
 	function strategy( a, b, key ) {
 		// a => target value
 		// b => source value
 		// key => object key
 	}
+
+	merge = createMergeFcn({
+		'override': strategy
+	});
 	```
 
 *	__extend__: `boolean` indicating whether new properties can be added to the target `object`. If `false`, only __shared__ properties are merged. Default: `true`.
+
+	``` javascript
+	var merge = createMergeFcn({
+		'extend': false
+	});
+	```
 
 
 
