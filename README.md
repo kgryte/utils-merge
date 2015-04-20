@@ -251,7 +251,8 @@ out = merge( target, source1, source2 );
 	-	`SyntaxError`
 	-	`RangeError`
 
-*	If you need support for any of the above types, feel free to file an issue or submit a pull request.
+	If you need support for any of the above types, feel free to file an issue or submit a pull request.
+	
 *	`Number`, `String`, or `Boolean` objects are converted to [primitives](https://github.com/kgryte/utils/copy#notes).
 *	`functions` are __not__ [deep copied](https://github.com/kgryte/utils-copy#notes).
 *	Support for deep merging class instances is inherently [__fragile__](https://github.com/kgryte/utils-copy#notes).
