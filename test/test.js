@@ -575,4 +575,32 @@ describe( 'utils-merge', function tests() {
 		assert.ok( actual.c === src.c, 'no deep copies of new values' );
 	});
 
+	it( 'should return the target object if extend and override options are both false', function test() {
+		var merge,
+			target,
+			src,
+			actual,
+			expected;
+
+		target = {
+			'a': 'beep'
+		};
+
+		src = {
+			'a': 'boop',
+			'b': 'woot'
+		};
+
+		merge = createMergeFcn({
+			'extend': false,
+			'override': false
+		});
+
+		actual = merge( target, src );
+		expected = target;
+
+		assert.deepEqual( actual, expected );
+		assert.ok( actual === target );
+	});
+
 });
