@@ -31,7 +31,7 @@ var merge = createMergeFcn();
 
 The `function` accepts the following `options`:
 
-*	__level__: limits the merge depth. The default merge strategy is a deep (recursive) merge; i.e., `level = Number.POSITIVE_INFINITY`.
+*	__level__: limits the merge depth. The default merge strategy is a deep (recursive) merge. Default: `level = Number.POSITIVE_INFINITY`.
 
 	``` javascript
 	var merge = createMergeFcn({
@@ -47,7 +47,7 @@ The `function` accepts the following `options`:
 	});
 	```
 
-*	__override__: defines the merge strategy. If `true`, source `object` values will __always__ override target `object` values. If `false`, source values __never__ override target values (useful for adding, but not overwriting properties). To define a custom merge strategy, provide a `function`.
+*	__override__: defines the merge strategy. If `true`, source `object` values will __always__ override target `object` values. If `false`, source values __never__ override target values (useful for adding, but not overwriting, properties). To define a custom merge strategy, provide a `function`. Default: `true`.
 
 	``` javascript
 	// Turn off override...
@@ -89,14 +89,15 @@ target = {
 	'a': 'beep'
 };
 source = {
-	'b': 'boop'
+	'a': 'boop',
+	'b': 'bap'
 };
 
 out = merge( target, source );
 /* returns
 	{
-		'a': 'beep',
-		'b': 'boop'
+		'a': 'boop',
+		'b': 'bap'
 	}
 */
 ```
@@ -147,6 +148,27 @@ out = merge( target, source1, source2 );
 
 	console.log( out === target );
 	// returns true
+
+	console.log( target.b );
+	// returns 'boop'
+	```
+
+	To return a new `object`, provide an empty `object` as the first argument.
+
+	``` javascript
+	var target, source, out;
+
+	target = {
+		'a': 'beep'
+	};
+	source = {
+		'b': 'boop'
+	};
+
+	out = merge( {}, target, source );
+
+	console.log( out === target );
+	// returns false
 	```
 
 *	The default merge is a deep (recursive) merge. Hence,
@@ -158,7 +180,8 @@ out = merge( target, source1, source2 );
 		'a': {
 			'b': {
 				'c': 5
-			}
+			},
+			'd': 'beep'
 		}
 	};
 	source = {
@@ -175,7 +198,8 @@ out = merge( target, source1, source2 );
 			'a': {
 				'b': {
 					'c': 10
-				}
+				},
+				'd': 'beep'
 			}
 		}
 	*/
@@ -200,7 +224,7 @@ out = merge( target, source1, source2 );
 	// returns false
 	```
 
-*	__Only__ plain JavaScript `objects` are merged and extended. The following values/types are either copied or assigned:
+*	__Only__ plain JavaScript `objects` are merged and extended. The following values/types are either [deep copied](https://github.com/kgryte/utils-copy) or assigned:
 	-	`Boolean`
 	-	`String`
 	-	`Number`
@@ -218,7 +242,7 @@ out = merge( target, source1, source2 );
 	-	`Float64Array`
 	-	`Buffer` ([Node.js]((http://nodejs.org/api/buffer.html)))
 
-*	Deep copy does __not__ work for the following values/types (see [utils-copy](https://github.com/kgryte/utils-copy)):
+*	Deep copying does __not__ work for the following values/types (see [utils-copy](https://github.com/kgryte/utils-copy#notes)):
 	-	`Set`
 	-	`Map`
 	-	`Error`
@@ -228,9 +252,9 @@ out = merge( target, source1, source2 );
 	-	`RangeError`
 
 *	If you need support for any of the above types, feel free to file an issue or submit a pull request.
-*	`Number`, `String`, or `Boolean` objects are converted to primitives (see [utils-copy](https://github.com/kgryte/utils/copy)).
-*	`functions` are __not__ deep copied (see [utils-copy](https://github.com/kgryte/utils-copy)).
-*	Support for deep merging class instances is inherently __fragile__ (see [utils-copy](https://github.com/kgryte/utils-copy)).
+*	`Number`, `String`, or `Boolean` objects are converted to [primitives](https://github.com/kgryte/utils/copy#notes).
+*	`functions` are __not__ [deep copied](https://github.com/kgryte/utils-copy#notes).
+*	Support for deep merging class instances is inherently [__fragile__](https://github.com/kgryte/utils-copy#notes).
 
 
 
