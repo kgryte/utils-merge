@@ -33,7 +33,8 @@ The method accepts the following `options`:
 
 *	__level__: limits the merge depth. The default merge strategy is a deep (recursive) merge; i.e., `level = Number.POSITIVE_INFINITY`.
 *	__copy__: `boolean` indicating whether to [deep copy](https://github.com/kgryte/utils-copy) merged values. Deep copying prevents shared references and source `object` mutation. Default: `true`.
-*	__override__: defines the merge strategy. If `true`, source `object` values will always override target `object` values. If `false`, source values never override target values (useful for adding, but not overwriting properties). To define a custom merge strategy, provide a `function`. 
+*	__override__: defines the merge strategy. If `true`, source `object` values will always override target `object` values. If `false`, source values never override target values (useful for adding, but not overwriting properties). To define a custom merge strategy, provide a `function`.
+
 	``` javascript
 	function strategy( a, b, key ) {
 		// a => target value
@@ -41,13 +42,14 @@ The method accepts the following `options`:
 		// key => object key
 	}
 	```
+	
 *	__extend__: `boolean` indicating whether new properties can be added to the target `object`. If `false`, only shared properties are merged. Default: `true`.
 
 
 
 #### merge( target, source1[, source2[,...,sourceN] ] )
 
-Merges and extends a target `object`.
+Merge and extend a target `object`.
 
 ``` javascript
 
