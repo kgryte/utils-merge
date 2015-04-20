@@ -33,7 +33,7 @@ The method accepts the following `options`:
 
 *	__level__: limits the merge depth. The default merge strategy is a deep (recursive) merge; i.e., `level = Number.POSITIVE_INFINITY`.
 *	__copy__: `boolean` indicating whether to [deep copy](https://github.com/kgryte/utils-copy) merged values. Deep copying prevents shared references and source `object` mutation. Default: `true`.
-*	__override__: defines the merge strategy. If `true`, source `object` values will always override target `object` values. If `false`, source values never override target values (useful for adding, but not overwriting properties). To define a custom merge strategy, provide a `function`.
+*	__override__: defines the merge strategy. If `true`, source `object` values will __always__ override target `object` values. If `false`, source values __never__ override target values (useful for adding, but not overwriting properties). To define a custom merge strategy, provide a `function`.
 
 	``` javascript
 	function strategy( a, b, key ) {
@@ -42,8 +42,8 @@ The method accepts the following `options`:
 		// key => object key
 	}
 	```
-	
-*	__extend__: `boolean` indicating whether new properties can be added to the target `object`. If `false`, only shared properties are merged. Default: `true`.
+
+*	__extend__: `boolean` indicating whether new properties can be added to the target `object`. If `false`, only __shared__ properties are merged. Default: `true`.
 
 
 
@@ -63,8 +63,138 @@ Merge and extend a target `object`.
 ## Examples
 
 ``` javascript
-var createMergeFcn = require( 'utils-merge2' );
+var createMergeFcn = require( 'utils-merge2' ),
+	createCopy = require( 'utils-copy' );
 
+var target,
+	source,
+	merge,
+	obj;
+
+obj = {
+	'a': 'beep',
+	'b': 'boop',
+	'c': {
+		'c1': 'woot',
+		'c2': false,
+		'c3': {
+			'c3a': [ 1, 2 ],
+			'c3b': null
+		}
+	},
+	'd': [ 1, 2, 3 ]
+};
+
+source = {
+	'b': Math.PI,
+	'c': {
+		'c1': 'bap',
+		'c3': {
+			'c3b': 5,
+			'c3c': 'bop'
+		},
+		'c4': 1337,
+		'c5': new Date()
+	},
+	'd': [ 4, 5, 6 ],
+	'e': true
+};
+
+// [0] Default merge behavior...
+merge = createMergeFcn();
+target = merge( {}, obj, source );
+console.log( target );
+
+// [1] Restrict the merge depth...
+merge = createMergeFcn({
+	'level': 2
+});
+target = merge( createCopy( obj ), createCopy( source ) );
+console.log( target );
+
+// [2] Only merge matching properties...
+merge = createMergeFcn({
+	'extend': false
+});
+target = merge( createCopy( obj ), source );
+console.log( target );
+
+// [3] Don't override existing properties...
+merge = createMergeFcn({
+	'override': false
+});
+target = merge( {}, obj, source );
+console.log( target );
+
+// [4] Return the same object...
+merge = createMergeFcn({
+	'override': false,
+	'extend': false
+});
+target = merge( createCopy( obj ), source );
+console.log( target );
+
+// [5] Custom merge strategy...
+/**
+* FUNCTION: strategy( a, b, key )
+*	Defines a custom merge strategy.
+*
+* @param {*} a - target value
+* @param {*} b - source value
+* @param {String} key - key on which to perform a merge
+* @returns {*} merge value
+*/
+function strategy( a, b, key ) {
+	if ( typeof a === 'string' && typeof b === 'string' ) {
+		return a + b;
+	}
+	if ( Array.isArray( a ) && Array.isArray( b ) ) {
+		return a.concat( b );
+	}
+	if ( key === 'c3b' ) {
+		return b * 5000;
+	}
+	// No override:
+	return a;
+} // end FUNCTION strategy()
+
+merge = createMergeFcn({
+	'override': strategy
+});
+target = merge( {}, obj, source );
+console.log( target );
+
+// [6] Built-in Objects and Class instances...
+function Foo( bar ) {
+	this._bar = bar;
+	return this;
+}
+
+merge = createMergeFcn();
+
+obj = {
+	'time': new Date(),
+	'regex': /beep/,
+	'buffer': new Buffer( 'beep' ),
+	'Boolean': new Boolean( true ),
+	'String': new String( 'woot' ),
+	'Number': new Number( 5 ),
+	'Uint8Array': new Uint8Array( 10 ),
+	'Foo': new Foo( 'beep' )
+};
+source = {
+	'time': new Date( obj.time - 60000 ),
+	'regex': /boop/,
+	'buffer': new Buffer( 'boop' ),
+	'Boolean': new Boolean( false ),
+	'String': new String( 'bop' ),
+	'Number': new Number( 10 ),
+	'Uint8Array': new Uint8Array( 5 ),
+	'Foo': new Foo( 'boop' )
+};
+
+target = merge( obj, source );
+console.log( target );
 ```
 
 To run the example code from the top-level application directory,
