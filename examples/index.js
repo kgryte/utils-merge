@@ -3,10 +3,10 @@
 var createMergeFcn = require( './../lib' ),
 	createCopy = require( 'utils-copy' );
 
-var target,
-	source,
+var source,
 	merge,
-	obj;
+	obj,
+	out;
 
 obj = {
 	'a': 'beep',
@@ -49,11 +49,11 @@ console.log( '\n' );
 console.log( 'Source:' );
 console.log( source );
 
-target = merge( {}, obj, source );
+out = merge( {}, obj, source );
 
 console.log( '\n' );
 console.log( 'Result:' );
-console.log( target );
+console.log( out );
 
 // [1] Restrict the merge depth...
 console.log( '\n=======' );
@@ -69,11 +69,11 @@ console.log( '\n' );
 console.log( 'Source:' );
 console.log( source );
 
-target = merge( createCopy( obj ), createCopy( source ) );
+out = merge( createCopy( obj ), createCopy( source ) );
 
 console.log( '\n' );
 console.log( 'Result:' );
-console.log( target );
+console.log( out );
 
 // [2] Only merge matching properties...
 console.log( '\n=======' );
@@ -89,11 +89,11 @@ console.log( '\n' );
 console.log( 'Source:' );
 console.log( source );
 
-target = merge( createCopy( obj ), source );
+out = merge( createCopy( obj ), source );
 
 console.log( '\n' );
 console.log( 'Result:' );
-console.log( target );
+console.log( out );
 
 // [3] Don't override existing properties...
 console.log( '\n=======' );
@@ -109,11 +109,11 @@ console.log( '\n' );
 console.log( 'Source:' );
 console.log( source );
 
-target = merge( {}, obj, source );
+out = merge( {}, obj, source );
 
 console.log( '\n' );
 console.log( 'Result:' );
-console.log( target );
+console.log( out );
 
 // [4] Return the same object...
 console.log( '\n=======' );
@@ -130,11 +130,11 @@ console.log( '\n' );
 console.log( 'Source:' );
 console.log( source );
 
-target = merge( createCopy( obj ), source );
+out = merge( createCopy( obj ), source );
 
 console.log( '\n' );
 console.log( 'Result:' );
-console.log( target );
+console.log( out );
 
 // [5] Custom merge strategy...
 console.log( '\n=======' );
@@ -173,11 +173,11 @@ console.log( '\n' );
 console.log( 'Source:' );
 console.log( source );
 
-target = merge( {}, obj, source );
+out = merge( {}, obj, source );
 
 console.log( '\n' );
 console.log( 'Result:' );
-console.log( target );
+console.log( out );
 
 // [6] Built-in Objects and Class instances...
 
@@ -218,8 +218,8 @@ console.log( '\n' );
 console.log( 'Source:' );
 console.log( source );
 
-target = merge( obj, source );
+out = merge( obj, source );
 
 console.log( '\n' );
 console.log( 'Result:' );
-console.log( target );
+console.log( out );

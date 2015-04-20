@@ -29,7 +29,7 @@ Returns a `function` for merging and extending `objects`.
 var merge = createMergeFcn();
 ```
 
-The method accepts the following `options`:
+The `function` accepts the following `options`:
 
 *	__level__: limits the merge depth. The default merge strategy is a deep (recursive) merge; i.e., `level = Number.POSITIVE_INFINITY`.
 
@@ -60,6 +60,7 @@ The method accepts the following `options`:
 		// a => target value
 		// b => source value
 		// key => object key
+		return <something>;
 	}
 
 	merge = createMergeFcn({
@@ -77,12 +78,70 @@ The method accepts the following `options`:
 
 
 
-#### merge( target, source1[, source2[,...,sourceN] ] )
+#### merge( target, source1[, source2[,...,sourceN]] )
 
 Merge and extend a target `object`.
 
 ``` javascript
+var target, source, out;
 
+target = {
+	'a': 'beep'
+};
+source = {
+	'b': 'boop'
+};
+
+out = merge( target, source );
+/* returns
+	{
+		'a': 'beep',
+		'b': 'boop'
+	}
+*/
+```
+
+The `function` accepts multiple source `objects`.
+
+``` javascript
+var target, source1, source2, out;
+
+target = {
+	'a': 'beep'
+};
+source1 = {
+	'b': 'boop'
+};
+source2 = {
+	'c': 'cat'
+};
+
+out = merge( target, source1, source2 );
+/* returns
+	{
+		'a': 'beep',
+		'b': 'boop',
+		'c': 'cat'
+	}
+*/
+```
+
+__Note__: the target `object` is __mutated__.
+
+``` javascript
+var target, source, out;
+
+target = {
+	'a': 'beep'
+};
+source = {
+	'b': 'boop'
+};
+
+out = merge( target, source );
+
+console.log( out === target );
+// returns true
 ```
 
 
@@ -96,10 +155,10 @@ Merge and extend a target `object`.
 var createMergeFcn = require( 'utils-merge2' ),
 	createCopy = require( 'utils-copy' );
 
-var target,
-	source,
+var source,
 	merge,
-	obj;
+	obj,
+	out;
 
 obj = {
 	'a': 'beep',
@@ -132,7 +191,7 @@ source = {
 
 // [0] Default merge behavior...
 merge = createMergeFcn();
-target = merge( {}, obj, source );
+out = merge( {}, obj, source );
 /* returns
 	{
 		'a': 'beep',
@@ -157,7 +216,7 @@ target = merge( {}, obj, source );
 merge = createMergeFcn({
 	'level': 2
 });
-target = merge( createCopy( obj ), createCopy( source ) );
+out = merge( createCopy( obj ), createCopy( source ) );
 /* returns
 	{
 		'a': 'beep',
@@ -181,7 +240,7 @@ target = merge( createCopy( obj ), createCopy( source ) );
 merge = createMergeFcn({
 	'extend': false
 });
-target = merge( createCopy( obj ), source );
+out = merge( createCopy( obj ), source );
 /* returns
 	{
 		'a': 'beep',
@@ -202,7 +261,7 @@ target = merge( createCopy( obj ), source );
 merge = createMergeFcn({
 	'override': false
 });
-target = merge( {}, obj, source );
+out = merge( {}, obj, source );
 /* returns
 	{
 		'a': 'beep',
@@ -228,7 +287,7 @@ merge = createMergeFcn({
 	'override': false,
 	'extend': false
 });
-target = merge( createCopy( obj ), source );
+out = merge( createCopy( obj ), source );
 /* returns
 	{
 		'a': 'beep',
@@ -263,7 +322,7 @@ function strategy( a, b, key ) {
 merge = createMergeFcn({
 	'override': strategy
 });
-target = merge( {}, obj, source );
+out = merge( {}, obj, source );
 /* returns
 	{
 		'a': 'beep',
@@ -313,7 +372,7 @@ source = {
 	'Foo': new Foo( 'boop' )
 };
 
-target = merge( obj, source );
+out = merge( obj, source );
 /* returns
 	{
 		'time': <Date>,
