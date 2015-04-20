@@ -261,6 +261,7 @@ out = merge( target, source1, source2 );
 	3. 	They do not allow limiting the merge depth.
 	4. 	If they deep copy (which most do not), they fail to account for `Number`, `String`, `Boolean`, `Buffer`, and typed `array` objects, as well as class instances.
 	5. 	They do not allow custom merging strategies.
+	6. 	They fail to validate options and arguments.
 
 
 
