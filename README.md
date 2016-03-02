@@ -1,6 +1,6 @@
 Merge
 ===
-[![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Coverage Status][coveralls-image]][coveralls-url] [![Dependencies][dependencies-image]][dependencies-url]
+[![NPM version][npm-image]][npm-url] [![Build Status][build-image]][build-url] [![Coverage Status][coverage-image]][coverage-url] [![Dependencies][dependencies-image]][dependencies-url]
 
 > Merge and extend objects.
 
@@ -10,8 +10,6 @@ Merge
 ``` bash
 $ npm install utils-merge2
 ```
-
-For use in the browser, use [browserify](https://github.com/substack/node-browserify).
 
 
 ## Usage
@@ -39,7 +37,7 @@ The `function` accepts the following `options`:
 	});
 	```
 
-*	__copy__: `boolean` indicating whether to [deep copy](https://github.com/kgryte/utils-copy) merged values. Deep copying prevents shared references and source `object` mutation. Default: `true`.
+*	__copy__: `boolean` indicating whether to [deep copy][utils-copy] merged values. Deep copying prevents shared references and source `object` mutation. Default: `true`.
 
 	``` javascript
 	var merge = createMergeFcn({
@@ -75,7 +73,6 @@ The `function` accepts the following `options`:
 		'extend': false
 	});
 	```
-
 
 
 #### merge( target, source1[, source2[,...,sourceN]] )
@@ -128,8 +125,7 @@ out = merge( target, source1, source2 );
 ```
 
 
-
-
+---
 ## Notes
 
 *	The target `object` is __mutated__.
@@ -205,7 +201,7 @@ out = merge( target, source1, source2 );
 	*/
 	```
 
-*	By default, merged values are [deep copied](https://github.com/kgryte/utils-copy). Hence,
+*	By default, merged values are [deep copied][utils-copy]. Hence,
 
 	``` javascript
 	var target, source, out;
@@ -224,7 +220,7 @@ out = merge( target, source1, source2 );
 	// returns false
 	```
 
-*	__Only__ plain JavaScript `objects` are merged and extended. The following values/types are either [deep copied](https://github.com/kgryte/utils-copy) or assigned:
+*	__Only__ plain JavaScript `objects` are merged and extended. The following values/types are either [deep copied][utils-copy] or assigned:
 	-	`Boolean`
 	-	`String`
 	-	`Number`
@@ -240,9 +236,9 @@ out = merge( target, source1, source2 );
 	-	`Uint32Array`
 	-	`Float32Array`
 	-	`Float64Array`
-	-	`Buffer` ([Node.js]((http://nodejs.org/api/buffer.html)))
+	-	`Buffer` ([Node.js][node-buffer])
 
-*	Deep copying does __not__ work for the following values/types (see [utils-copy](https://github.com/kgryte/utils-copy#notes)):
+*	Deep copying does __not__ work for the following values/types (see [utils-copy][utils-copy-notes]):
 	-	`Set`
 	-	`Map`
 	-	`Error`
@@ -251,21 +247,12 @@ out = merge( target, source1, source2 );
 	-	`SyntaxError`
 	-	`RangeError`
 
-	If you need support for any of the above types, feel free to file an issue or submit a pull request.
-
-*	`Number`, `String`, or `Boolean` objects are merged as [primitives](https://github.com/kgryte/utils-copy#notes).
-*	`functions` are __not__ [deep copied](https://github.com/kgryte/utils-copy#notes).
-*	Support for deep merging class instances is inherently [__fragile__](https://github.com/kgryte/utils-copy#notes).
-*	Re: __why__ this implementation and not the many other [merge](https://github.com/jaredhanson/utils-merge)/[xtend](https://github.com/Raynos/xtend)/[node-extend](https://github.com/justmoon/node-extend)/[deep-merge](https://github.com/Raynos/deep-merge)/[deep-extend](https://github.com/unclechu/node-deep-extend/blob/master/index.js) modules out there.
-	1. 	They always __extend__ and __merge__ and do not allow one or the other.
-	2. 	They do not deep merge.
-	3. 	They do not allow limiting the merge depth.
-	4. 	If they deep copy, they fail to account for `Number`, `String`, `Boolean`, `Buffer`, and typed `array` objects, as well as class instances.
-	5. 	They do not allow custom merging strategies.
-	6. 	They fail to validate options and arguments.
+*	`Number`, `String`, or `Boolean` objects are merged as [primitives][utils-copy-notes].
+*	`functions` are __not__ [deep copied][utils-copy-notes].
+*	Support for deep merging class instances is inherently [__fragile__][utils-copy-notes].
 
 
-
+---
 ## Examples
 
 ``` javascript
@@ -511,11 +498,12 @@ $ node ./examples/index.js
 ```
 
 
+---
 ## Tests
 
 ### Unit
 
-Unit tests use the [Mocha](http://mochajs.org) test framework with [Chai](http://chaijs.com) assertions. To run the tests, execute the following command in the top-level application directory:
+This repository uses [tape][tape] for unit tests. To run the tests, execute the following command in the top-level application directory:
 
 ``` bash
 $ make test
@@ -526,7 +514,7 @@ All new feature development should have corresponding unit tests to validate cor
 
 ### Test Coverage
 
-This repository uses [Istanbul](https://github.com/gotwarlost/istanbul) as its code coverage tool. To generate a test coverage report, execute the following command in the top-level application directory:
+This repository uses [Istanbul][istanbul] as its code coverage tool. To generate a test coverage report, execute the following command in the top-level application directory:
 
 ``` bash
 $ make test-cov
@@ -539,6 +527,23 @@ $ make view-cov
 ```
 
 
+### Browser Support
+
+This repository uses [Testling][testling] for browser testing. To run the tests in a (headless) local web browser, execute the following command in the top-level application directory:
+
+``` bash
+$ make test-browsers
+```
+
+To view the tests in a local web browser,
+
+``` bash
+$ make view-browser-tests
+```
+
+<!-- [![browser support][browsers-image]][browsers-url] -->
+
+
 ---
 ## License
 
@@ -547,17 +552,17 @@ $ make view-cov
 
 ## Copyright
 
-Copyright &copy; 2015. Athan Reines.
+Copyright &copy; 2015-2016. Athan Reines.
 
 
 [npm-image]: http://img.shields.io/npm/v/utils-merge2.svg
 [npm-url]: https://npmjs.org/package/utils-merge2
 
-[travis-image]: http://img.shields.io/travis/kgryte/utils-merge/master.svg
-[travis-url]: https://travis-ci.org/kgryte/utils-merge
+[build-image]: http://img.shields.io/travis/kgryte/utils-merge/master.svg
+[build-url]: https://travis-ci.org/kgryte/utils-merge
 
-[coveralls-image]: https://img.shields.io/coveralls/kgryte/utils-merge/master.svg
-[coveralls-url]: https://coveralls.io/r/kgryte/utils-merge?branch=master
+[coverage-image]: https://img.shields.io/codecov/c/github/kgryte/utils-merge/master.svg
+[coverage-url]: https://codecov.io/github/kgryte/utils-merge?branch=master
 
 [dependencies-image]: http://img.shields.io/david/kgryte/utils-merge.svg
 [dependencies-url]: https://david-dm.org/kgryte/utils-merge
@@ -567,3 +572,14 @@ Copyright &copy; 2015. Athan Reines.
 
 [github-issues-image]: http://img.shields.io/github/issues/kgryte/utils-merge.svg
 [github-issues-url]: https://github.com/kgryte/utils-merge/issues
+
+[browsers-image]: https://ci.testling.com/kgryte/utils-merge.png
+[browsers-url]: https://ci.testling.com/kgryte/utils-merge
+
+[tape]: https://github.com/substack/tape
+[istanbul]: https://github.com/gotwarlost/istanbul
+[testling]: https://ci.testling.com
+
+[utils-copy]: https://github.com/kgryte/utils-copy
+[utils-copy-notes]: https://github.com/kgryte/utils-copy#notes
+[node-buffer]: http://nodejs.org/api/buffer.html
