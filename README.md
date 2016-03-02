@@ -237,8 +237,6 @@ out = merge( target, source1, source2 );
 	-	`Float32Array`
 	-	`Float64Array`
 	-	`Buffer` ([Node.js][node-buffer])
-
-*	Deep copying does __not__ work for the following values/types (see [utils-copy][utils-copy-notes]):
 	-	`Set`
 	-	`Map`
 	-	`Error`
