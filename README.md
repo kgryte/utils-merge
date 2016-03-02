@@ -24,19 +24,19 @@ Merges and extends a target `object`.
 
 ``` javascript
 var target = {
-  'a': 'beep'
+    'a': 'beep'
 };
 var source = {
-  'a': 'boop',
-  'b': 'bap'
+    'a': 'boop',
+    'b': 'bap'
 };
 
 var out = merge( target, source );
 /* returns
-  {
-    'a': 'boop',
-    'b': 'bap'
-  }
+    {
+        'a': 'boop',
+        'b': 'bap'
+    }
 */
 ```
 
@@ -44,22 +44,22 @@ The `function` supports merging multiple source `objects`.
 
 ``` javascript
 var target = {
-  'a': 'beep'
+    'a': 'beep'
 };
 var source1 = {
-  'b': 'boop'
+    'b': 'boop'
 };
 var source2 = {
-  'c': 'cat'
+    'c': 'cat'
 };
 
 var out = merge( target, source1, source2 );
 /* returns
-  {
-    'a': 'beep',
-    'b': 'boop',
-    'c': 'cat'
-  }
+    {
+        'a': 'beep',
+        'b': 'boop',
+        'c': 'cat'
+    }
 */
 ```
 
@@ -79,48 +79,48 @@ The `function` accepts the following `options`:
 
 * __level__: limits the merge depth. The default merge strategy is a deep (recursive) merge. Default: `level = Number.POSITIVE_INFINITY`.
 
-  ``` javascript
-  var merge = factory({
-    'level': 2
-  });
-  ```
+    ``` javascript
+    var merge = factory({
+        'level': 2
+    });
+    ```
 
 * __copy__: `boolean` indicating whether to [deep copy][utils-copy] merged values. Deep copying prevents shared references and source `object` mutation. Default: `true`.
 
-  ``` javascript
-  var merge = factory({
-    'copy': false
-  });
-  ```
+    ``` javascript
+    var merge = factory({
+        'copy': false
+    });
+    ```
 
 * __override__: defines the merge strategy. If `true`, source `object` values will __always__ override target `object` values. If `false`, source values __never__ override target values (useful for adding, but not overwriting, properties). To define a custom merge strategy, provide a `function`. Default: `true`.
 
-  ``` javascript
-  // Turn off override...
-  var merge = factory({
-    'override': false
-  });
+    ``` javascript
+    // Turn off override...
+    var merge = factory({
+        'override': false
+    });
 
-  // Define a custom strategy...
-  function strategy( a, b, key ) {
-    // a => target value
-    // b => source value
-    // key => object key
-    return '<something>';
-  }
+    // Define a custom strategy...
+    function strategy( a, b, key ) {
+        // a => target value
+        // b => source value
+        // key => object key
+        return '<something>';
+    }
 
-  merge = factory({
-    'override': strategy
-  });
-  ```
+    merge = factory({
+        'override': strategy
+    });
+    ```
 
 * __extend__: `boolean` indicating whether new properties can be added to the target `object`. If `false`, only __shared__ properties are merged. Default: `true`.
 
-  ``` javascript
-  var merge = factory({
-    'extend': false
-  });
-  ```
+    ``` javascript
+    var merge = factory({
+        'extend': false
+    });
+    ```
 
 
 ---
@@ -128,113 +128,113 @@ The `function` accepts the following `options`:
 
 * The target `object` is __mutated__.
 
-  ``` javascript
-  var target = {
-    'a': 'beep'
-  };
-  var source = {
-    'b': 'boop'
-  };
+    ``` javascript
+    var target = {
+        'a': 'beep'
+    };
+    var source = {
+        'b': 'boop'
+    };
 
-  var out = merge( target, source );
+    var out = merge( target, source );
 
-  console.log( out === target );
-  // returns true
+    console.log( out === target );
+    // returns true
 
-  console.log( target.b );
-  // returns 'boop'
-  ```
+    console.log( target.b );
+    // returns 'boop'
+    ```
 
-  To return a new `object`, provide an empty `object` as the first argument.
+    To return a new `object`, provide an empty `object` as the first argument.
 
-  ``` javascript
-  var target = {
-    'a': 'beep'
-  };
-  var source = {
-    'b': 'boop'
-  };
+    ``` javascript
+    var target = {
+        'a': 'beep'
+    };
+    var source = {
+        'b': 'boop'
+    };
 
-  var out = merge( {}, target, source );
+    var out = merge( {}, target, source );
 
-  console.log( out === target );
-  // returns false
-  ```
+    console.log( out === target );
+    // returns false
+    ```
 
 * The default merge is a deep (recursive) merge. Hence,
 
-  ``` javascript
-  var target = {
-    'a': {
-      'b': {
-        'c': 5
-      },
-      'd': 'beep'
-    }
-  };
-  var source = {
-    'a': {
-      'b': {
-        'c': 10
-      }
-    }
-  };
+    ``` javascript
+    var target = {
+        'a': {
+            'b': {
+                'c': 5
+            },
+            'd': 'beep'
+        }
+    };
+    var source = {
+        'a': {
+            'b': {
+                'c': 10
+            }
+        }
+    };
 
-  var out = merge( target, source );
-  /* returns
-    {
-      'a': {
-        'b': {
-          'c': 10
-        },
-        'd': 'beep'
-      }
-    }
-  */
-  ```
+    var out = merge( target, source );
+    /* returns
+        {
+            'a': {
+                'b': {
+                    'c': 10
+                },
+                'd': 'beep'
+            }
+        }
+    */
+    ```
 
 * By default, merged values are [deep copied][utils-copy]. Hence,
 
-  ``` javascript
-  var target = {
-    'a': null
-  };
-  var source = {
-    'a': {
-      'b': [ 1, 2, 3 ]
-    }
-  };
+    ``` javascript
+    var target = {
+        'a': null
+    };
+    var source = {
+        'a': {
+            'b': [ 1, 2, 3 ]
+        }
+    };
 
-  merge( target, source );
+    merge( target, source );
 
-  console.log( target.a.b === source.a.b );
-  // returns false
-  ```
+    console.log( target.a.b === source.a.b );
+    // returns false
+    ```
 
 * __Only__ plain JavaScript `objects` are merged and extended. The following values/types are either [deep copied][utils-copy] or assigned:
-  - `Boolean`
-  - `String`
-  - `Number`
-  - `Date`
-  - `RegExp`
-  - `Array`
-  - `Int8Array`
-  - `Uint8Array`
-  - `Uint8ClampedArray`
-  - `Init16Array`
-  - `Uint16Array`
-  - `Int32Array`
-  - `Uint32Array`
-  - `Float32Array`
-  - `Float64Array`
-  - `Buffer` ([Node.js][node-buffer])
-  - `Set`
-  - `Map`
-  - `Error`
-  -   `URIError`
-  - `ReferenceError`
-  - `SyntaxError`
-  - `RangeError`
+    - `Boolean`
+    - `String`
+    - `Number`
+    - `Date`
+    - `RegExp`
+    - `Array`
+    - `Int8Array`
+    - `Uint8Array`
+    - `Uint8ClampedArray`
+    - `Init16Array`
+    - `Uint16Array`
+    - `Int32Array`
+    - `Uint32Array`
+    - `Float32Array`
+    - `Float64Array`
+    - `Buffer` ([Node.js][node-buffer])
+    - `Set`
+    - `Map`
+    - `Error`
+    -    `URIError`
+    - `ReferenceError`
+    - `SyntaxError`
+    - `RangeError`
 * `Number`, `String`, or `Boolean` objects are merged as [primitives][utils-copy-notes].
 * `functions` are __not__ [deep copied][utils-copy-notes].
 * Support for deep merging class instances is inherently [__fragile__][utils-copy-notes].
@@ -245,237 +245,237 @@ The `function` accepts the following `options`:
 
 ``` javascript
 var createMergeFcn = require( 'utils-merge2' ),
-  createCopy = require( 'utils-copy' );
+    createCopy = require( 'utils-copy' );
 
 var source,
-  merge,
-  obj,
-  out;
+    merge,
+    obj,
+    out;
 
 obj = {
-  'a': 'beep',
-  'b': 'boop',
-  'c': {
-    'c1': 'woot',
-    'c2': false,
-    'c3': {
-      'c3a': [ 1, 2 ],
-      'c3b': null
-    }
-  },
-  'd': [ 1, 2, 3 ]
+    'a': 'beep',
+    'b': 'boop',
+    'c': {
+        'c1': 'woot',
+        'c2': false,
+        'c3': {
+            'c3a': [ 1, 2 ],
+            'c3b': null
+        }
+    },
+    'd': [ 1, 2, 3 ]
 };
 
 source = {
-  'b': Math.PI,
-  'c': {
-    'c1': 'bap',
-    'c3': {
-      'c3b': 5,
-      'c3c': 'bop'
+    'b': Math.PI,
+    'c': {
+        'c1': 'bap',
+        'c3': {
+            'c3b': 5,
+            'c3c': 'bop'
+        },
+        'c4': 1337,
+        'c5': new Date()
     },
-    'c4': 1337,
-    'c5': new Date()
-  },
-  'd': [ 4, 5, 6 ],
-  'e': true
+    'd': [ 4, 5, 6 ],
+    'e': true
 };
 
 // [0] Default merge behavior...
 merge = createMergeFcn();
 out = merge( {}, obj, source );
 /* returns
-  {
-    'a': 'beep',
-    'b': 3.141592653589793,
-    'c': {
-      'c1': 'bap',
-      'c2': false,
-      'c3': {
-        'c3a': [ 1, 2 ],
-        'c3b': 5,
-        'c3c': 'bop'
-      },
-      'c4': 1337,
-      'c5': <Date>
-    },
-    'd': [ 4, 5, 6 ],
-    'e': true
-  }
+    {
+        'a': 'beep',
+        'b': 3.141592653589793,
+        'c': {
+            'c1': 'bap',
+            'c2': false,
+            'c3': {
+                'c3a': [ 1, 2 ],
+                'c3b': 5,
+                'c3c': 'bop'
+            },
+            'c4': 1337,
+            'c5': <Date>
+        },
+        'd': [ 4, 5, 6 ],
+        'e': true
+    }
 */
 
 // [1] Restrict the merge depth...
 merge = createMergeFcn({
-  'level': 2
+    'level': 2
 });
 out = merge( createCopy( obj ), createCopy( source ) );
 /* returns
-  {
-    'a': 'beep',
-    'b': 3.141592653589793,
-    'c': {
-      'c1': 'bap',
-      'c2': false,
-      'c3': {
-        'c3b': 5,
-        'c3c': 'bop'
-      },
-      'c4': 1337,
-      'c5': <Date>
-    },
-    'd': [ 4, 5, 6 ],
-    'e': true
-  }
+    {
+        'a': 'beep',
+        'b': 3.141592653589793,
+        'c': {
+            'c1': 'bap',
+            'c2': false,
+            'c3': {
+                'c3b': 5,
+                'c3c': 'bop'
+            },
+            'c4': 1337,
+            'c5': <Date>
+        },
+        'd': [ 4, 5, 6 ],
+        'e': true
+    }
 */
 
 // [2] Only merge matching properties...
 merge = createMergeFcn({
-  'extend': false
+    'extend': false
 });
 out = merge( createCopy( obj ), source );
 /* returns
-  {
-    'a': 'beep',
-    'b': 3.141592653589793,
-    'c': {
-      'c1': 'bap',
-      'c2': false,
-      'c3': {
-        'c3a': [ 1, 2 ],
-        'c3b': 5
-      }
-    },
-    'd': [ 4, 5, 6 ]
-  }
+    {
+        'a': 'beep',
+        'b': 3.141592653589793,
+        'c': {
+            'c1': 'bap',
+            'c2': false,
+            'c3': {
+                'c3a': [ 1, 2 ],
+                'c3b': 5
+            }
+        },
+        'd': [ 4, 5, 6 ]
+    }
 */
 
 // [3] Don't override existing properties...
 merge = createMergeFcn({
-  'override': false
+    'override': false
 });
 out = merge( {}, obj, source );
 /* returns
-  {
-    'a': 'beep',
-    'b': 'boop',
-    'c': {
-      'c1': 'woot',
-      'c2': false,
-      'c3': {
-        'c3a': [ 1, 2 ],
-        'c3b': null,
-        'c3c': 'bop'
-      },
-      'c4': 1337,
-      'c5': <Date>
-    },
-    'd': [ 1, 2, 3 ],
-    'e': true
-  }
+    {
+        'a': 'beep',
+        'b': 'boop',
+        'c': {
+            'c1': 'woot',
+            'c2': false,
+            'c3': {
+                'c3a': [ 1, 2 ],
+                'c3b': null,
+                'c3c': 'bop'
+            },
+            'c4': 1337,
+            'c5': <Date>
+        },
+        'd': [ 1, 2, 3 ],
+        'e': true
+    }
 */
 
 // [4] Return the same object...
 merge = createMergeFcn({
-  'override': false,
-  'extend': false
+    'override': false,
+    'extend': false
 });
 out = merge( createCopy( obj ), source );
 /* returns
-  {
-    'a': 'beep',
-    'b': 'boop',
-    'c': {
-      'c1': 'woot',
-      'c2': false,
-      'c3': {
-        'c3a': [ 1, 2 ],
-        'c3b': null
-      }
-    },
-    'd': [ 1, 2, 3 ]
-  }
+    {
+        'a': 'beep',
+        'b': 'boop',
+        'c': {
+            'c1': 'woot',
+            'c2': false,
+            'c3': {
+                'c3a': [ 1, 2 ],
+                'c3b': null
+            }
+        },
+        'd': [ 1, 2, 3 ]
+    }
 */
 
 // [5] Custom merge strategy...
 function strategy( a, b, key ) {
-  if ( typeof a === 'string' && typeof b === 'string' ) {
-    return a + b;
-  }
-  if ( Array.isArray( a ) && Array.isArray( b ) ) {
-    return a.concat( b );
-  }
-  if ( key === 'c3b' ) {
-    return b * 5000;
-  }
-  // No override:
-  return a;
+    if ( typeof a === 'string' && typeof b === 'string' ) {
+        return a + b;
+    }
+    if ( Array.isArray( a ) && Array.isArray( b ) ) {
+        return a.concat( b );
+    }
+    if ( key === 'c3b' ) {
+        return b * 5000;
+    }
+    // No override:
+    return a;
 }
 
 merge = createMergeFcn({
-  'override': strategy
+    'override': strategy
 });
 out = merge( {}, obj, source );
 /* returns
-  {
-    'a': 'beep',
-    'b': 'boop',
-    'c': {
-      'c1': 'wootbap',
-      'c2': false,
-      'c3': {
-        'c3a': [ 1, 2 ],
-        'c3b': 25000,
-        'c3c': 'bop'
-      },
-      'c4': 1337,
-      'c5': <Date>
-    },
-    'd': [ 1, 2, 3, 4, 5, 6 ],
-    'e': true
-  }
+    {
+        'a': 'beep',
+        'b': 'boop',
+        'c': {
+            'c1': 'wootbap',
+            'c2': false,
+            'c3': {
+                'c3a': [ 1, 2 ],
+                'c3b': 25000,
+                'c3c': 'bop'
+            },
+            'c4': 1337,
+            'c5': <Date>
+        },
+        'd': [ 1, 2, 3, 4, 5, 6 ],
+        'e': true
+    }
 */
 
 // [6] Built-in Objects and Class instances...
 function Foo( bar ) {
-  this._bar = bar;
-  return this;
+    this._bar = bar;
+    return this;
 }
 
 merge = createMergeFcn();
 
 obj = {
-  'time': new Date(),
-  'regex': /beep/,
-  'buffer': new Buffer( 'beep' ),
-  'Boolean': new Boolean( true ),
-  'String': new String( 'woot' ),
-  'Number': new Number( 5 ),
-  'Uint8Array': new Uint8Array( 10 ),
-  'Foo': new Foo( 'beep' )
+    'time': new Date(),
+    'regex': /beep/,
+    'buffer': new Buffer( 'beep' ),
+    'Boolean': new Boolean( true ),
+    'String': new String( 'woot' ),
+    'Number': new Number( 5 ),
+    'Uint8Array': new Uint8Array( 10 ),
+    'Foo': new Foo( 'beep' )
 };
 source = {
-  'time': new Date( obj.time - 60000 ),
-  'regex': /boop/,
-  'buffer': new Buffer( 'boop' ),
-  'Boolean': new Boolean( false ),
-  'String': new String( 'bop' ),
-  'Number': new Number( 10 ),
-  'Uint8Array': new Uint8Array( 5 ),
-  'Foo': new Foo( 'boop' )
+    'time': new Date( obj.time - 60000 ),
+    'regex': /boop/,
+    'buffer': new Buffer( 'boop' ),
+    'Boolean': new Boolean( false ),
+    'String': new String( 'bop' ),
+    'Number': new Number( 10 ),
+    'Uint8Array': new Uint8Array( 5 ),
+    'Foo': new Foo( 'boop' )
 };
 
 out = merge( obj, source );
 /* returns
-  {
-    'time': <Date>,
-    'regex': /boop/,
-    'buffer': <Buffer 62 6f 6f 70>,
-    'Boolean': false,
-    'String': 'bop',
-    'Number': 10,
-    'Uint8Array': <Uint8Array>,
-    'Foo': <Foo>
-  }
+    {
+        'time': <Date>,
+        'regex': /boop/,
+        'buffer': <Buffer 62 6f 6f 70>,
+        'Boolean': false,
+        'String': 'bop',
+        'Number': 10,
+        'Uint8Array': <Uint8Array>,
+        'Foo': <Foo>
+    }
 */
 ```
 
