@@ -206,13 +206,11 @@ var merge = factory({
 
 var target = {
     'a': 'beep',
-    'b': 'boop',
-    'c': 1234
+    'b': 'boop'
 };
 
 var source = {
     'a': null,
-    'b': 'hello',
     'c': 'bop'
 };
 
@@ -248,11 +246,13 @@ var merge = factory({
 
 var target = {
     'a': 'beep',
-    'b': 'boop'
+    'b': 'boop',
+    'c': 1234
 };
 
 var source = {
     'a': null,
+    'b': {},
     'c': 'bop'
 };
 
