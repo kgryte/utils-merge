@@ -78,144 +78,211 @@ var merge = factory( opts );
 The `function` accepts the following `options`:
 
 * __level__: limits the merge depth. The default merge strategy is a deep (recursive) merge. Default: `level = Number.POSITIVE_INFINITY`.
+* __copy__: `boolean` indicating whether to [deep copy][utils-copy] merged values. Deep copying prevents shared references and source `object` mutation. Default: `true`.
+* __override__: defines the merge strategy. If `true`, source `object` values will __always__ override target `object` values. If `false`, source values __never__ override target values (useful for adding, but not overwriting, properties). To define a custom merge strategy, provide a `function`. Default: `true`.
+* __extend__: `boolean` indicating whether new properties can be added to the target `object`. If `false`, only __shared__ properties are merged. Default: `true`.
 
-    ``` javascript
-    var merge = factory({
-        'level': 2
-    });
+The default merge is a deep (recursive) merge.
 
-    var target = {
+``` javascript
+var target = {
+    'a': {
+        'b': {
+            'c': 5
+        },
+        'd': 'beep'
+    }
+};
+var source = {
+    'a': {
+        'b': {
+            'c': 10
+        }
+    }
+};
+
+var out = merge( target, source );
+/* returns
+    {
+        'a': {
+            'b': {
+                'c': 10
+            },
+            'd': 'beep'
+        }
+    }
+*/
+```
+
+To limit the merge depth, set the `level` option.
+
+``` javascript
+var merge = factory({
+    'level': 2
+});
+
+var target = {
+    '1': {
+        'a': 'beep',
+        '2': {
+            '3': null,
+            'b': [ 5, 6, 7 ]
+        }
+    }
+};
+
+var source = {
+    '1': {
+        'b': 'boop',
+        '2': {
+            '3': [ 1, 2, 3 ]
+        }
+    }
+};
+
+var out = merge( target, source );
+/* returns
+    {
         '1': {
             'a': 'beep',
-            '2': {
-                '3': null,
-                'b': [ 5, 6, 7 ]
-            }
-        }
-    };
-
-    var source = {
-        '1': {
             'b': 'boop',
             '2': {
                 '3': [ 1, 2, 3 ]
             }
         }
-    };
-
-    var out = merge( target, source );
-    /* returns
-        {
-            '1': {
-                'a': 'beep',
-                'b': 'boop',
-                '2': {
-                    '3': [ 1, 2, 3 ]
-                }
-            }
-        }
-    */
-    ```
-
-* __copy__: `boolean` indicating whether to [deep copy][utils-copy] merged values. Deep copying prevents shared references and source `object` mutation. Default: `true`.
-
-    ``` javascript
-    var merge = factory({
-        'copy': false
-    });
-
-    var target = {};
-
-    var source = {
-        'a': [ 1, 2, 3 ]
-    };
-
-    var out = merge( target, source );
-
-    var bool = ( out.a === source.a );
-    // returns true
-    ```
-
-* __override__: defines the merge strategy. If `true`, source `object` values will __always__ override target `object` values. If `false`, source values __never__ override target values (useful for adding, but not overwriting, properties). To define a custom merge strategy, provide a `function`. Default: `true`.
-
-    ``` javascript
-    // Turn off override...
-    var merge = factory({
-        'override': false
-    });
-
-    var target = {
-        'a': 'beep',
-        'b': 'boop'
-    };
-
-    var source = {
-        'a': null,
-        'c': 'bop'
-    };
-
-    var out = merge( target, source );
-    /* returns
-        {
-            'a': 'beep',
-            'b': 'boop',
-            'c': 'bop'
-        }
-    */
-
-    // Define a custom strategy...
-    function strategy( a, b, key ) {
-        // a => target value
-        // b => source value
-        // key => object key
-        if ( key === 'a' ) {
-            return b;
-        }
-        if ( key === 'b' ) {
-            return a;
-        }
-        return 'bebop';
     }
+*/
+```
 
-    merge = factory({
-        'override': strategy
-    });
+By default, merged values are [deep copied][utils-copy].
 
-    out = merge( target, source );
-    /* returns
-        {
-            'a': null,
-            'b': 'boop',
-            'c': 'bebop'
-        }
-    */
-    ```
+``` javascript
+var target = {
+    'a': null
+};
+var source = {
+    'a': {
+        'b': [ 1, 2, 3 ]
+    }
+};
 
-* __extend__: `boolean` indicating whether new properties can be added to the target `object`. If `false`, only __shared__ properties are merged. Default: `true`.
+merge( target, source );
 
-    ``` javascript
-    var merge = factory({
-        'extend': false
-    });
+console.log( target.a.b === source.a.b );
+// returns false
+```
 
-    var target = {
+To allow shared references, set the `copy` option to `false`.
+
+``` javascript
+var merge = factory({
+    'copy': false
+});
+
+var target = {};
+
+var source = {
+    'a': [ 1, 2, 3 ]
+};
+
+var out = merge( target, source );
+
+var bool = ( out.a === source.a );
+// returns true
+```
+
+To prevent existing properties from being overridden, set the `override` option to `false`.
+
+``` javascript
+var merge = factory({
+    'override': false
+});
+
+var target = {
+    'a': 'beep',
+    'b': 'boop'
+};
+
+var source = {
+    'a': null,
+    'c': 'bop'
+};
+
+var out = merge( target, source );
+/* returns
+    {
         'a': 'beep',
-        'b': 'boop'
-    };
+        'b': 'boop',
+        'c': 'bop'
+    }
+*/
+```
 
-    var source = {
-        'b': 'hello',
-        'c': 'world'
-    };
+Alternatively, to define a custom merge strategy, set the `override` option to a `function`.
 
-    var out = merge( target, source );
-    /* returns
-        {
-            'a': 'beep',
-            'b': 'hello'
-        }
-    */
-    ```
+``` javascript
+function strategy( a, b, key ) {
+    // a => target value
+    // b => source value
+    // key => object key
+    if ( key === 'a' ) {
+        return b;
+    }
+    if ( key === 'b' ) {
+        return a;
+    }
+    return 'bebop';
+}
+
+var merge = factory({
+    'override': strategy
+});
+
+var target = {
+    'a': 'beep',
+    'b': 'boop'
+};
+
+var source = {
+    'a': null,
+    'c': 'bop'
+};
+
+var out = merge( target, source );
+/* returns
+    {
+        'a': null,
+        'b': 'boop',
+        'c': 'bebop'
+    }
+*/
+```
+
+To prevent non-existent properties from being added to the `target` object, set the `extend` option to `false`.
+
+``` javascript
+var merge = factory({
+    'extend': false
+});
+
+var target = {
+    'a': 'beep',
+    'b': 'boop'
+};
+
+var source = {
+    'b': 'hello',
+    'c': 'world'
+};
+
+var out = merge( target, source );
+/* returns
+    {
+        'a': 'beep',
+        'b': 'hello'
+    }
+*/
+```
 
 
 ---
@@ -253,56 +320,6 @@ The `function` accepts the following `options`:
     var out = merge( {}, target, source );
 
     console.log( out === target );
-    // returns false
-    ```
-
-* The default merge is a deep (recursive) merge. Hence,
-
-    ``` javascript
-    var target = {
-        'a': {
-            'b': {
-                'c': 5
-            },
-            'd': 'beep'
-        }
-    };
-    var source = {
-        'a': {
-            'b': {
-                'c': 10
-            }
-        }
-    };
-
-    var out = merge( target, source );
-    /* returns
-        {
-            'a': {
-                'b': {
-                    'c': 10
-                },
-                'd': 'beep'
-            }
-        }
-    */
-    ```
-
-* By default, merged values are [deep copied][utils-copy]. Hence,
-
-    ``` javascript
-    var target = {
-        'a': null
-    };
-    var source = {
-        'a': {
-            'b': [ 1, 2, 3 ]
-        }
-    };
-
-    merge( target, source );
-
-    console.log( target.a.b === source.a.b );
     // returns false
     ```
 
