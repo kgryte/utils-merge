@@ -355,9 +355,10 @@ var out = merge( target, source );
     - `ReferenceError`
     - `SyntaxError`
     - `RangeError`
+* Support for deep merging class instances is inherently [__fragile__][utils-copy-notes].
 * `Number`, `String`, or `Boolean` objects are merged as [primitives][utils-copy-notes].
 * Functions are __not__ [deep copied][utils-copy-notes].
-* Support for deep merging class instances is inherently [__fragile__][utils-copy-notes].
+
 
 
 ---
