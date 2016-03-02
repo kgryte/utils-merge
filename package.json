@@ -50,6 +50,7 @@
     "url": "https://github.com/kgryte/utils-merge/issues"
   },
   "dependencies": {
+    "object-keys": "^1.0.9",
     "type-name": "^2.0.0",
     "utils-copy": "^1.1.1",
     "validate.io-boolean-primitive": "^1.0.0",
