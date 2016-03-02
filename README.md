@@ -71,13 +71,19 @@ Returns a custom merge `function` for merging and extending `objects`.
 ``` javascript
 var factory = require( 'utils-merge2' ).factory;
 
-var opts = {};
+var opts = {
+    'level': 100,
+    'copy': true,
+    'override': true,
+    'extend': true    
+};
+
 var merge = factory( opts );
 ```
 
 The `function` accepts the following `options`:
 
-* __level__: limits the merge depth. The default merge strategy is a deep (recursive) merge. Default: `level = Number.POSITIVE_INFINITY`.
+* __level__: limits the merge depth. The default merge strategy is a deep (recursive) merge. Default: `level = +infinity`.
 * __copy__: `boolean` indicating whether to [deep copy][utils-copy] merged values. Deep copying prevents shared references and source `object` mutation. Default: `true`.
 * __override__: defines the merge strategy. If `true`, source `object` values will __always__ override target `object` values. If `false`, source values __never__ override target values (useful for adding, but not overwriting, properties). To define a custom merge strategy, provide a `function`. Default: `true`.
 * __extend__: `boolean` indicating whether new properties can be added to the target `object`. If `false`, only __shared__ properties are merged. Default: `true`.
@@ -166,9 +172,9 @@ var source = {
     }
 };
 
-merge( target, source );
+var out = merge( target, source );
 
-console.log( target.a.b === source.a.b );
+console.log( out.a.b === source.a.b );
 // returns false
 ```
 
@@ -200,11 +206,13 @@ var merge = factory({
 
 var target = {
     'a': 'beep',
-    'b': 'boop'
+    'b': 'boop',
+    'c': 1234
 };
 
 var source = {
     'a': null,
+    'b': 'hello',
     'c': 'bop'
 };
 
