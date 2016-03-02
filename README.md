@@ -266,7 +266,7 @@ var out = merge( target, source );
 */
 ```
 
-To prevent non-existent properties from being added to the `target` object, set the `extend` option to `false`.
+To prevent non-existent properties from being added to the target `object`, set the `extend` option to `false`.
 
 ``` javascript
 var merge = factory({
@@ -364,7 +364,7 @@ var out = merge( target, source );
 ## Examples
 
 ``` javascript
-var merge = require( './../lib' );
+var merge = require( 'utils-merge2' );
 
 var target;
 var source;
