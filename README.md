@@ -23,19 +23,15 @@ var merge = require( 'utils-merge2' );
 Merges and extends a target `object`.
 
 ``` javascript
-var target;
-var source;
-var out;
-
-target = {
+var target = {
   'a': 'beep'
 };
-source = {
+var source = {
   'a': 'boop',
   'b': 'bap'
 };
 
-out = merge( target, source );
+var out = merge( target, source );
 /* returns
   {
     'a': 'boop',
@@ -47,22 +43,17 @@ out = merge( target, source );
 The `function` supports merging multiple source `objects`.
 
 ``` javascript
-var source1;
-var source2;
-var target;
-var out;
-
-target = {
+var target = {
   'a': 'beep'
 };
-source1 = {
+var source1 = {
   'b': 'boop'
 };
-source2 = {
+var source2 = {
   'c': 'cat'
 };
 
-out = merge( target, source1, source2 );
+var out = merge( target, source1, source2 );
 /* returns
   {
     'a': 'beep',
@@ -138,18 +129,14 @@ The `function` accepts the following `options`:
 * The target `object` is __mutated__.
 
   ``` javascript
-  var target;
-  var source;
-  var out;
-
-  target = {
+  var target = {
     'a': 'beep'
   };
-  source = {
+  var source = {
     'b': 'boop'
   };
 
-  out = merge( target, source );
+  var out = merge( target, source );
 
   console.log( out === target );
   // returns true
@@ -161,18 +148,14 @@ The `function` accepts the following `options`:
   To return a new `object`, provide an empty `object` as the first argument.
 
   ``` javascript
-  var target;
-  var source;
-  var out;
-
-  target = {
+  var target = {
     'a': 'beep'
   };
-  source = {
+  var source = {
     'b': 'boop'
   };
 
-  out = merge( {}, target, source );
+  var out = merge( {}, target, source );
 
   console.log( out === target );
   // returns false
@@ -181,11 +164,7 @@ The `function` accepts the following `options`:
 * The default merge is a deep (recursive) merge. Hence,
 
   ``` javascript
-  var target;
-  var source;
-  var out;
-
-  target = {
+  var target = {
     'a': {
       'b': {
         'c': 5
@@ -193,7 +172,7 @@ The `function` accepts the following `options`:
       'd': 'beep'
     }
   };
-  source = {
+  var source = {
     'a': {
       'b': {
         'c': 10
@@ -201,7 +180,7 @@ The `function` accepts the following `options`:
     }
   };
 
-  out = merge( target, source );
+  var out = merge( target, source );
   /* returns
     {
       'a': {
@@ -217,14 +196,10 @@ The `function` accepts the following `options`:
 * By default, merged values are [deep copied][utils-copy]. Hence,
 
   ``` javascript
-  var target;
-  var source;
-  var out;
-
-  target = {
+  var target = {
     'a': null
   };
-  source = {
+  var source = {
     'a': {
       'b': [ 1, 2, 3 ]
     }
