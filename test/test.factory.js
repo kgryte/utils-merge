@@ -103,7 +103,7 @@ tape( 'the function returns a function which throws an error if provided insuffi
 	}
 });
 
-tape( 'if provided a `target` argument which is not an object, the returned function will throw a type error', function test( t ) {
+tape( 'if provided a `target` argument which is not an object, the returned function throws a type error', function test( t ) {
 	var values;
 	var merge;
 	var i;
@@ -133,7 +133,7 @@ tape( 'if provided a `target` argument which is not an object, the returned func
 	}
 });
 
-tape( 'if provided a `source` argument which is not an object, the returned function will throw a type error', function test( t ) {
+tape( 'if provided a `source` argument which is not an object, the returned function throws a type error', function test( t ) {
 	var values;
 	var merge;
 	var i;
