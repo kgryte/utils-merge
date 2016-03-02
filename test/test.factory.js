@@ -80,13 +80,13 @@ tape( 'if provided an invalid option, the function will throw a type error', fun
 });
 
 tape( 'the function returns a merge function', function test( t ) {
+	var merge;
 	var opts;
-	var fcn;
 
 	opts = setup();
-	fcn = factory( opts );
+	merge = factory( opts );
 
-	t.equal( typeof fcn, 'function', 'returns a function' );
+	t.equal( typeof merge, 'function', 'returns a function' );
 	t.end();
 });
 
